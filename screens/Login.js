@@ -1,7 +1,7 @@
 import { Text, View, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Footer from '../components/screens/Footer';
-import { Ionicons} from '@expo/vector-icons';
+import { Ionicons, Fontisto } from '@expo/vector-icons';
 import React, { useState } from 'react';
 
 const Home = ({navigation}) => {
@@ -18,9 +18,12 @@ const Home = ({navigation}) => {
             <View className="flex-1">
                 <View className="m-3 p-5 sm:mx-auto sm:w-full sm:max-w-sm rounded-md border-2 border-gray-200">
                     <View>
-                        <Text for="email" className="block text-sm font-medium leading-6 text-gray-900">
-                            Електронна пошта
-                        </Text>
+                        <View className="flex-row items-center">
+                            <Text for="email" className="block text-sm font-medium leading-6 text-gray-900 mr-1">
+                                Електронна пошта
+                            </Text>
+                            <Fontisto name="asterisk" size={7} color="red"/>
+                        </View>
                         <View className="mt-1">
                             <TextInput
                                 id="email"
@@ -35,8 +38,9 @@ const Home = ({navigation}) => {
                     </View>
 
                     <View className="flex">
-                        <View className="mt-2">
-                            <Text className="block text-sm font-medium leading-6 text-gray-900">Пароль</Text>
+                        <View className="mt-2 flex-row items-center">
+                            <Text className="block text-sm font-medium leading-6 text-gray-900 mr-2">Пароль</Text>
+                            <Fontisto name="asterisk" size={7} color="red"/>
                         </View>
                         <View className="mt-1">
                             <View className="flex z-10 absolute p-2 h-full right-0 justify-center">
@@ -67,6 +71,16 @@ const Home = ({navigation}) => {
                             onPress={() => navigation.navigate('Home')}
                         >
                             <Text className="text-center text-white font-bold">Вхід</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            type="submit"
+                            className="flex w-full rounded-md bg-transparent px-3 py-3 text-sm leading-6"
+                            onPress={() => navigation.navigate('Registration')}
+                        >
+                            <View className="flex-row justify-center">
+                            <Text className="text-sm font-medium leading-6 text-sky-600 text-right">Немає акаунта?</Text>
+                            <Text className="text-sm font-medium leading-6 text-sky-600 text-right underline"> Реєстрація</Text>
+                        </View>
                         </TouchableOpacity>
                     </View>
                 </View>
