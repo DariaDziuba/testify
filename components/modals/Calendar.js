@@ -23,7 +23,7 @@ const Calendar = ({visible, hideModal, setValue}) => {
                         <TouchableOpacity onPress={() => hideModal()} className="justify-center  items-end z-10">
                             <Octicons name="x" size={30} color="#0ea5e9" />
                         </TouchableOpacity>
-                        <View className='flex absolute w-full h-full items-center '>
+                        <View className='flex absolute w-full h-full items-center'>
                             <Text className="text-lg font-bold tracking-tight text-gray-900">
                                 Дата народження
                             </Text>
@@ -34,6 +34,7 @@ const Calendar = ({visible, hideModal, setValue}) => {
                             testID="dateTimePicker"
                             locale="uk"
                             value={currentValue}
+                            maximumDate={new Date()}
                             mode='date'
                             is24Hour={true}
                             display="spinner"

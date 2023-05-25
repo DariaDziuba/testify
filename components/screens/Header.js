@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from 'react-native';
-import { student } from '../../test_data/students';
+import { student } from '../../mocks/students';
 import { Octicons } from '@expo/vector-icons';
 import React from 'react';
 

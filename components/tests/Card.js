@@ -9,13 +9,16 @@ const Card = ({props}) => {
             <View className="flex flex-row items-center justify-between">
                 <View className="flex flex-row items-center">
                     <Octicons name="bookmark" size={25} color="#0ea5e9" />
-                    <Text className="text-gray-500 text-lg ml-2 font-bold tracking-tight">Тест {card.ID}</Text>
+                    <Text numberOfLines={1} ellipsizeMode="tail" className="text-gray-500 text-lg ml-2 tracking-tight">Тест {card.ID} - {card.subjectShort}</Text>
                 </View>
-                <Text className="text-gray-800 text-lg ml-2 font-bold tracking-tight">
-                    {card.result || 0}/{card.maxPoints}
-                </Text>
+                <View className="ml-2">
+                    { card.result
+                        ? <Text className="text-gray-800 text-lg ml-2 font-bold tracking-tight"> {card.result || 0}/{card.maxPoints}</Text>
+                        : <Text className="text-red-300 text-lg ml-2 font-bold tracking-tight">../{card.maxPoints}</Text>
+                    }
+                </View>
             </View>
-            <View className="mt-2">
+            <View>
                 <Text className="text-gray-800 text-sm tracking-tight">
                     {card.name}
                 </Text>

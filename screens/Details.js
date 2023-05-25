@@ -39,9 +39,19 @@ const Details = (props) => {
                     <TouchableOpacity className="m-1" onPress={() => props.navigation.goBack()}>
                         <Octicons name="arrow-left" size={30} color="#0ea5e9" />
                     </TouchableOpacity>
-                    <Text className="text-gray-700 text-lg ml-2 tracking-tight">
-                        Тест {testInfo.ID}
-                    </Text>
+
+                    <View className="flex flex-row w-4/5">
+                        <View className="justify-center">
+                            <Text className="text-gray-700 text-lg ml-2 tracking-tight">
+                                Тест {testInfo.ID} -
+                            </Text>
+                        </View>
+                        <View className="justify-center w-4/5">
+                            <Text numberOfLines={1} ellipsizeMode="tail" className="text-gray-500 text-lg ml-2 tracking-tight">
+                                {testInfo.subject}
+                            </Text>
+                        </View>
+                    </View>
                 </View>
                 <View>
                     <Text className="text-gray-900 text-lg font-bold ml-2 leading-none text-center tracking-tight">

@@ -1,5 +1,4 @@
 import { Text, View, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import Footer from '../components/screens/Footer';
 import { Ionicons, Fontisto } from '@expo/vector-icons';
 import React, { useState } from 'react';
@@ -9,9 +8,9 @@ const Home = ({navigation}) => {
 
     return (
         <SafeAreaView className="flex-1">
-            <View className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <Text className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                    Вітаємо!
+            <View>
+                <Text className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                    Вхід
                 </Text>
             </View>
 
@@ -54,7 +53,7 @@ const Home = ({navigation}) => {
                                 type="password"
                                 secureTextEntry={password}
                                 autocomplete="current-password"
-                                placeholder="password"
+                                placeholder="Qwerty123"
                                 required
                                 className="block w-full p-2 rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900"
                             />
