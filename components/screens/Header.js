@@ -20,7 +20,7 @@ const Header = (props) => {
                         </Text>
                         <Text className="text-gray-400 text-xs m-0 font-bold tracking-tight -mt-1">{student.group}</Text>
                     </View>
-                    <TouchableOpacity onPress={() => props.navigation.navigate('Login')}className="pt-1 ml-2 mr-2">
+                    <TouchableOpacity onPress={() => props.navigation.navigate('Start')}className="pt-1 ml-2 mr-2">
                         <Octicons name="sign-out" size={28} color="#0ea5e9" />
                     </TouchableOpacity>
                 </View>

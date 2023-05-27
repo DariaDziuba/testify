@@ -16,6 +16,9 @@ export const test_cards = [
         summary: "",
         subject: "Шаблони проєктування програмного забезпечення",
         subjectShort: "ШППЗ",
+        questions: 20,
+        attempts: 3,
+        passedAttempts: 2,
         topics: [
             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
             "y five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently ",
@@ -32,12 +35,15 @@ export const test_cards = [
         summary: "Теми для проходження",
         subject: "Комп'ютерні мережі",
         subjectShort: "КМ",
+        attempts: 3,
+        passedAttempts: 1,
         topics: [
             'Підключення бібліотек',
             'Ініціалізація namespace та class',
             'Ініціалізація потоків та зчитування даних',
             'Робота з потоками'
         ],
+        questions: 10,
         maxPoints: 100,
         startDate: "",
         endDate: "",
@@ -49,7 +55,10 @@ export const test_cards = [
         summary: "Теми для проходження",
         subject: "Паралельні та розподіленні обчислення",
         subjectShort: "ПтРО",
+        questions: 17,
         maxPoints: 100,
+        attempts: 3,
+        passedAttempts:0,
         startDate: "",
         endDate: "",
         result: ""
@@ -62,6 +71,9 @@ export const test_cards = [
         summary: "Теми для проходження",
         maxPoints: 100,
         startDate: "",
+        questions: 27,
+        attempts: 3,
+        passedAttempts:1,
         endDate: "",
         result: ""
     },
@@ -72,6 +84,9 @@ export const test_cards = [
         subject: "Web-програмування",
         subjectShort: "Web-програмування",
         maxPoints: 100,
+        questions: 30,
+        attempts: 3,
+        passedAttempts:0,
         startDate: "",
         endDate: "",
         result: ""
@@ -83,6 +98,9 @@ export const test_cards = [
         subject: "Паралельні та розподіленні обчислення",
         subjectShort: "ПтРО",
         maxPoints: 100,
+        questions: 50,
+        attempts: 3,
+        passedAttempts:2,
         startDate: "",
         endDate: "",
         result: ""

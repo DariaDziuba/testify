@@ -1,8 +1,9 @@
 import { SafeAreaView, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import Header from '../components/screens/Header';
+import TestWasClosed from '../components/modals/TestWasClosed';
 import Footer from '../components/screens/Footer';
 import { Octicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useState } from 'react';
 
 const getTopics = (topics) => {
     const result = [];
@@ -28,9 +29,11 @@ const getTopics = (topics) => {
 const Details = (props) => {
     const { testInfo } = props.route.params;
     const isEvaluated = !!testInfo.result;
+    const [visible, setVisible] = useState(false);
 
     return (
         <SafeAreaView className="flex flex-1">
+            <TestWasClosed visible={visible} hideModal={() => setVisible(false)} testID={testInfo.ID}/>
             <View>
                 <Header navigation={props.navigation}/>
             </View>
@@ -69,6 +72,12 @@ const Details = (props) => {
                             </View>
                         }
                     </View>
+                    <View className="flex-row items-center">
+                        <Octicons name="question" size={22} color="#0ea5e9" />
+                        <Text className="text-gray-900 ml-2 text-lg leading-none tracking-tight">
+                            Кількість тестових питань: {testInfo.questions}
+                        </Text>
+                    </View>
                     <View className="flex-1">
                         {testInfo.topics && testInfo.topics.length &&
                             <View>
@@ -87,7 +96,12 @@ const Details = (props) => {
                 </View>
                 {!isEvaluated &&
                     <View>
-                        <TouchableOpacity className="flex  p-2 rounded-md bg-sky-500 px-3 h-10 text-sm leading-6 justify-center">
+                        <TouchableOpacity
+                            className="flex  p-2 rounded-md bg-sky-500 px-3 h-10 text-sm leading-6 justify-center"
+                            onPress={() => {
+                                props.navigation.navigate('Test', { testID: testInfo.ID, showModal: () => setVisible(true)});
+                            }}
+                        >
                             <Text className="text-center text-white font-bold">Розпочати тест!</Text>
                         </TouchableOpacity>
                     </View>

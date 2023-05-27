@@ -16,7 +16,7 @@ const Calendar = ({visible, hideModal, setValue}) => {
     };
 
     return (
-        <Modal transparent visible={visible}>
+        <Modal transparent visible={visible} animationType='fade'>
             <SafeAreaView className="flex-1 bg-grey-transparent justify-center items-center">
                 <View className="bg-white w-4/5 rounded-md p-3">
                     <View>

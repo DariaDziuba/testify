@@ -35,6 +35,10 @@ const FilterBar = ({visible, hideModal, options}) => {
     }
 
     const getFilteredCards = () => {
+        if (!selectedFilters.length) {
+            return all_cards;
+        }
+
         const result = all_cards.filter((card) => {
             return selectedFilters.includes(card.subject);
         });
@@ -49,7 +53,7 @@ const FilterBar = ({visible, hideModal, options}) => {
     };
 
     return (
-        <Modal transparent visible={visible}>
+        <Modal transparent={true} visible={visible} animationType='fade'>
             <View className="flex-1 bg-grey-transparent justify-items-start">
                 <SafeAreaProvider className="flex-1 bg-white w-4/5 rounded-md ">
                     <SafeAreaView className="flex-1 p-3">
