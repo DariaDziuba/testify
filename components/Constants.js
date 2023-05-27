@@ -1,4 +1,4 @@
-export const QUESTION_TYPES ={
+export const QUESTION_TYPES = {
     single: 'single',
     multiple: 'multiple',
     text: 'text'

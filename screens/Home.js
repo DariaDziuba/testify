@@ -20,8 +20,10 @@ const Home = ({navigation}) => {
 
     const refresh = () => {
         setRefreshing(true);
-        setTimeout(() => setRefreshing(false), 1000);
-    }
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 1000);
+    };
 
     const filterCards = (filter, cardsToFilter) => {
         setFilterID(filter);
@@ -48,7 +50,7 @@ const Home = ({navigation}) => {
             <FilterBar
                 visible={visible}
                 hideModal={() => setVisible(false)}
-                options={{allCards: testCards, setCards: updateCards }}
+                options={{allCards: testCards, setCards: updateCards}}
             />
 
             <Header navigation={navigation} />

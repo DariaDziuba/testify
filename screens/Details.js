@@ -28,8 +28,7 @@ const getTopics = (topics) => {
 
 const Details = (props) => {
     const { testInfo } = props.route.params;
-    const isEvaluated = !!testInfo.result;
-    const [visible, setVisible] = useState(false);
+    const [ visible, setVisible ] = useState(false);
 
     return (
         <SafeAreaView className="flex flex-1">
@@ -63,27 +62,42 @@ const Details = (props) => {
                 </View>
                 <View className="flex-1 p-2">
                     <View>
-                        {isEvaluated &&
+                        {testInfo.evaluated &&
                             <View className="flex-row items-center">
                                 <Octicons name="zap" size={22} color="#0ea5e9" />
-                                <Text className="text-gray-900 ml-2 text-lg leading-none tracking-tight">
-                                    Оцінка: {testInfo.result + '/' + testInfo.maxPoints}
+                                <Text className="text-gray-500 ml-2 text-lg leading-none tracking-tight">
+                                    Оцінка: <Text className="text-gray-900">{testInfo.result + '/' + testInfo.maxPoints}</Text>
                                 </Text>
                             </View>
                         }
                     </View>
                     <View className="flex-row items-center">
                         <Octicons name="question" size={22} color="#0ea5e9" />
-                        <Text className="text-gray-900 ml-2 text-lg leading-none tracking-tight">
-                            Кількість тестових питань: {testInfo.questions}
+                        <Text className="text-gray-500 ml-2 text-lg leading-none tracking-tight">
+                            Кількість тестових питань: <Text className="text-gray-900">{testInfo.questions}</Text>
                         </Text>
                     </View>
+                    <View className="flex-row items-center">
+                        <Octicons name={testInfo.evaluated ? 'heart' :'heart-fill'} size={22} color="#0ea5e9" />
+                        <Text className="text-gray-500 ml-2 text-lg leading-none tracking-tight">
+                            Спроби проходження: <Text className="text-gray-900">{testInfo.passedAttempts || 0}/{testInfo.attempts || 0}</Text>
+                        </Text>
+                    </View>
+                    {
+                        testInfo.scheduled &&
+                        <View className="flex-row items-center">
+                            <Octicons name='calendar' size={22} color="#0ea5e9" />
+                            <Text className="text-gray-500 ml-2 text-lg leading-none tracking-tight">
+                                Доступно до: <Text className="text-gray-900">{testInfo.endDate}</Text>
+                            </Text>
+                        </View>
+                    }
                     <View className="flex-1">
                         {testInfo.topics && testInfo.topics.length &&
                             <View>
                                 <View className="flex-row items-center">
-                                    <Octicons name="pin" size={22} color="#0ea5e9" />
-                                    <Text className="text-gray-900 ml-2 text-lg leading-none tracking-tight">Теми для проходження:</Text>
+                                    <Octicons name="info" size={22} color="#0ea5e9" />
+                                    <Text className="text-gray-900 font-bold ml-2 text-lg leading-none tracking-tight">Теми для проходження:</Text>
                                 </View>
                                 <ScrollView>
                                     <View className="pr-3">
@@ -94,7 +108,7 @@ const Details = (props) => {
                         }
                     </View>
                 </View>
-                {!isEvaluated &&
+                {!testInfo.evaluated &&
                     <View>
                         <TouchableOpacity
                             className="flex  p-2 rounded-md bg-sky-500 px-3 h-10 text-sm leading-6 justify-center"

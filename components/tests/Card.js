@@ -26,7 +26,7 @@ const Card = ({props}) => {
             <View className="flex flex-row mr-1 justify-between items-center pt-3">
                 <View className="content-center items-center">
                     {
-                        card.endDate &&
+                        card.scheduled &&
                             <Text className="text-gray-400">
                                 Доступно до:
                                 <Text className="font-bold"> {card.endDate}</Text>
