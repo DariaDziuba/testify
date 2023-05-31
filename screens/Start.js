@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, TouchableOpacity, Image} from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 import TestWasClosed from '../components/modals/TestWasClosed';
 import { getItem } from '../helpers/asyncStorageHelper';
 import { Octicons } from '@expo/vector-icons';

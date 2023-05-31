@@ -1,13 +1,39 @@
-import { Text, View, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
 import Footer from '../components/screens/Footer';
 import { Ionicons, Fontisto } from '@expo/vector-icons';
+import { HOSTNAME, ENDPOINTS } from '../components/Constants';
+import axios from 'axios';
 import React, { useState } from 'react';
+
+const login = (data) => {
+    if (!data || !Object.keys(data).length) {
+        return;
+    }
+
+    const url = HOSTNAME + ENDPOINTS.checkUserCredentials;
+    console.log(url);
+
+    axios.post(url, JSON.stringify(data))
+    .then((response) => response.json())
+    .then((result) => {
+        if (result && result.isSuccess) {
+            navigation.navigate('Home')
+        } else if (result) {
+            Alert.alert('Error', 'Failed');
+        }
+    })
+    .catch((error) => {
+        // Handle error
+        console.error(error);
+        Alert.alert('Error', 'Failed to create post');
+    });
+};
 
 const Home = ({navigation}) => {
     const [password, showPassword] = useState(true);
     const [formErrors, setFormErrors] = useState({});
     const [formData, setFormData] = useState({
-        email: '',
+        login: '',
         password: ''
     });
 
@@ -15,11 +41,23 @@ const Home = ({navigation}) => {
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
+    const checkUserCredentials = async () => {
+        let hasError = Object.keys(formErrors).find((key) => {
+            return !!formErrors[key];
+        });
+
+        if (hasError) {
+            return;
+        }
+
+        await login(formData);
+    }
+
     const handleValidation = (validate) => {
         const errors = {...formErrors};
 
         switch(validate) {
-            case 'email': errors.email = formData.email ? '' : 'Заповніть поле';
+            case 'login': errors.login = formData.login ? '' : 'Заповніть поле';
                 break;
             case 'password': errors.password = formData.password ? '' : 'Заповніть поле';
                 break;
@@ -41,25 +79,25 @@ const Home = ({navigation}) => {
                 <View className="m-3 p-5 sm:mx-auto sm:w-full sm:max-w-sm rounded-md border-2 border-gray-200">
                     <View>
                         <View className="flex-row items-center">
-                            <Text for="email" className="block text-sm font-medium leading-6 text-gray-900 mr-1">
+                            <Text for="login" className="block text-sm font-medium leading-6 text-gray-900 mr-1">
                                 Електронна пошта
                             </Text>
                             <Fontisto name="asterisk" size={7} color="red"/>
                         </View>
                         <View className="mt-1">
                             <TextInput
-                                id="email"
-                                name="email"
-                                type="email"
-                                autocomplete="email"
+                                id="login"
+                                name="login"
+                                type="login"
+                                autocomplete="login"
                                 placeholder="test@vntu.edu.ua"
-                                onChangeText={(text) => handleInputChange('email', text)}
-                                onEndEditing={() => handleValidation('email')}
+                                onChangeText={(text) => handleInputChange('login', text)}
+                                onEndEditing={() => handleValidation('login')}
                                 required
                                 className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
                             />
-                            { formErrors.email &&
-                                <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.email}</Text>
+                            { formErrors.login &&
+                                <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.login}</Text>
                             }
                         </View>
                     </View>
@@ -97,7 +135,7 @@ const Home = ({navigation}) => {
                         <TouchableOpacity
                             type="submit"
                             className="flex mt-3 w-full rounded-md bg-sky-500 px-3 py-3 text-sm leading-6"
-                            onPress={() => navigation.navigate('Home')}
+                            onPress={checkUserCredentials}
                         >
                             <Text className="text-center text-white font-bold">Вхід</Text>
                         </TouchableOpacity>
