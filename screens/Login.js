@@ -5,6 +5,29 @@ import React, { useState } from 'react';
 
 const Home = ({navigation}) => {
     const [password, showPassword] = useState(true);
+    const [formErrors, setFormErrors] = useState({});
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
+
+    const handleInputChange = (name, value) => {
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
+    };
+
+    const handleValidation = (validate) => {
+        const errors = {...formErrors};
+
+        switch(validate) {
+            case 'email': errors.email = formData.email ? '' : 'Заповніть поле';
+                break;
+            case 'password': errors.password = formData.password ? '' : 'Заповніть поле';
+                break;
+            default: break;
+        }
+
+        setFormErrors(errors);
+    };
 
     return (
         <SafeAreaView className="flex-1">
@@ -30,13 +53,18 @@ const Home = ({navigation}) => {
                                 type="email"
                                 autocomplete="email"
                                 placeholder="test@vntu.edu.ua"
+                                onChangeText={(text) => handleInputChange('email', text)}
+                                onEndEditing={() => handleValidation('email')}
                                 required
                                 className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
                             />
+                            { formErrors.email &&
+                                <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.email}</Text>
+                            }
                         </View>
                     </View>
 
-                    <View className="flex">
+                    <View className="flex mb-3">
                         <View className="mt-2 flex-row items-center">
                             <Text className="block text-sm font-medium leading-6 text-gray-900 mr-2">Пароль</Text>
                             <Fontisto name="asterisk" size={7} color="red"/>
@@ -54,13 +82,15 @@ const Home = ({navigation}) => {
                                 secureTextEntry={password}
                                 autocomplete="current-password"
                                 placeholder="Qwerty123"
+                                onChangeText={(text) => handleInputChange('password', text)}
+                                onEndEditing={() => handleValidation('password')}
                                 required
                                 className="block w-full p-2 rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900"
                             />
                         </View>
-                        <TouchableOpacity>
-                            <Text className="text-sm font-medium leading-6 text-sky-600 text-right underline">Забули пароль?</Text>
-                        </TouchableOpacity>
+                        { formErrors.password &&
+                            <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.password}</Text>
+                        }
                     </View>
 
                     <View>

@@ -12,13 +12,51 @@ const Registration = ({navigation}) => {
     const [visible, setVisible] = useState(false);
     const [birthDate, setBirthDate] = useState(new Date());
 
+    const [formErrors, setFormErrors] = useState({});
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        inviteCode: '',
+        lastName: '',
+        firstName: '',
+        fathersName: '',
+        dateOfBirth: ''
+    });
+
+    const handleInputChange = (name, value) => {
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
+    };
+
     const showModal = () => {
         setVisible(true);
     }
 
     const setBirthDateValue = (value) => {
+        handleInputChange('dateOfBirth', value);
         setBirthDate(value);
     }
+
+    const handleValidation = (validate) => {
+        const errors = {...formErrors};
+
+        switch(validate) {
+            case 'email': errors.email = formData.email ? '' : 'Заповніть поле';
+                break;
+            case 'password': errors.password = formData.password ? '' : 'Заповніть поле';
+                break;
+            case 'inviteCode': errors.inviteCode = formData.inviteCode ? '' : 'Заповніть поле';
+                break;
+            case 'lastName': errors.lastName = formData.lastName ? '' : 'Заповніть поле';
+                break;
+            case 'firstName': errors.firstName = formData.firstName ? '' : 'Заповніть поле';
+                break;
+            case 'fathersName': errors.fathersName = formData.fathersName ? '' : 'Заповніть поле';
+                break;
+            default: break;
+        }
+
+        setFormErrors(errors);
+    };
 
     return (
         <SafeAreaView className="flex-1">
@@ -55,7 +93,12 @@ const Registration = ({navigation}) => {
                                             placeholder="test@vntu.edu.ua"
                                             required
                                             className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
+                                            onChangeText={(text) => handleInputChange('email', text)}
+                                            onEndEditing={() => handleValidation('email')}
                                         />
+                                        { formErrors.email &&
+                                            <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.email}</Text>
+                                        }
                                     </View>
                                 </View>
 
@@ -77,10 +120,15 @@ const Registration = ({navigation}) => {
                                             secureTextEntry={password}
                                             autocomplete="current-password"
                                             placeholder="Qwerty123"
+                                            onChangeText={(text) => handleInputChange('password', text)}
+                                            onEndEditing={() => handleValidation('password')}
                                             required
                                             className="block w-full p-2 rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900"
                                         />
                                     </View>
+                                    { formErrors.password &&
+                                        <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.password}</Text>
+                                    }
                                 </View>
 
                                 <View>
@@ -96,9 +144,14 @@ const Registration = ({navigation}) => {
                                             name="inviteCode"
                                             placeholder=""
                                             required
+                                            onChangeText={(text) => handleInputChange('inviteCode', text)}
+                                            onEndEditing={() => handleValidation('inviteCode')}
                                             className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
                                         />
                                     </View>
+                                    { formErrors.inviteCode &&
+                                        <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.email}</Text>
+                                    }
                                 </View>
 
                                 <View className="flex flex-row justify-around">
@@ -114,9 +167,14 @@ const Registration = ({navigation}) => {
                                                 id="lastName"
                                                 name="lastName"
                                                 placeholder="Іванов"
+                                                onChangeText={(text) => handleInputChange('lastName', text)}
+                                                onEndEditing={() => handleValidation('lastName')}
                                                 required
                                                 className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
                                             />
+                                            { formErrors.lastName &&
+                                                <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.email}</Text>
+                                            }
                                         </View>
                                     </View>
 
@@ -132,9 +190,14 @@ const Registration = ({navigation}) => {
                                                 id="firstName"
                                                 name="firstName"
                                                 placeholder="Іван"
+                                                onChangeText={(text) => handleInputChange('firstName', text)}
+                                                onEndEditing={() => handleValidation('firstName')}
                                                 required
                                                 className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
                                             />
+                                            { formErrors.firstName &&
+                                                <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.email}</Text>
+                                            }
                                         </View>
                                     </View>
                                 </View>
@@ -151,9 +214,14 @@ const Registration = ({navigation}) => {
                                             id="fathersName"
                                             name="fathersName"
                                             placeholder="Іванович"
+                                            onChangeText={(text) => handleInputChange('fathersName', text)}
+                                            onEndEditing={() => handleValidation('fathersName')}
                                             required
                                             className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
                                         />
+                                        { formErrors.fathersName &&
+                                            <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.email}</Text>
+                                        }
                                     </View>
                                 </View>
 

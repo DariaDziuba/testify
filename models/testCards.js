@@ -1,8 +1,8 @@
+import { getItem } from '../helpers/asyncStorageHelper';
 import { toTestCard } from './testCard';
 
-export const toTestCards = (rawRestCards) => {
-    const result = [];
-    rawRestCards.forEach((rawRestCard) => result.push(toTestCard(rawRestCard)));
+export const toTestCards = async (rawTestCards) => {
+    const savedTasks = await getItem('savedTasks', true);
 
-    return result;
+    return rawTestCards.map((rawTestCard) => toTestCard(rawTestCard, savedTasks || {}));
 };

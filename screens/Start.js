@@ -2,7 +2,7 @@ import { View, Text, SafeAreaView, TouchableOpacity, Image} from 'react-native';
 import TestWasClosed from '../components/modals/TestWasClosed';
 import { getItem } from '../helpers/asyncStorageHelper';
 import { Octicons } from '@expo/vector-icons';
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 
 const Start = ({ navigation }) => {
     const [visible, setVisible] = useState(false);
