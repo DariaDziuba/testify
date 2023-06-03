@@ -17,6 +17,7 @@
     "@react-navigation/native-stack": "^6.9.12",
     "expo": "~48.0.9",
     "expo-image": "~1.0.0",
+    "expo-secure-store": "~12.1.1",
     "expo-status-bar": "~1.4.4",
     "i": "^0.3.7",
     "nativewind": "^2.0.11",
@@ -29,8 +30,7 @@
     "react-native-screens": "^3.20.0",
     "tailwind-react-native-classnames": "^1.5.1",
     "tailwind-rn": "^4.2.0",
-    "tailwindcss-react-native": "^1.7.10",
-    "expo-secure-store": "~12.1.1"
+    "tailwindcss-react-native": "^1.7.10"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

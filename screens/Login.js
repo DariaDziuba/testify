@@ -76,6 +76,7 @@ const Home = ({navigation}) => {
                                 name="login"
                                 type="login"
                                 autocomplete="login"
+                                inputMode="email"
                                 placeholder="test@vntu.edu.ua"
                                 onChangeText={(text) => handleInputChange('login', text)}
                                 onBlur={() => handleValidation('login')}

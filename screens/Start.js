@@ -5,7 +5,7 @@ import { getSecureData } from '../helpers/secureStorageHelper';
 import { showClosedTestError } from '../helpers/alertHelper';
 import { Octicons } from '@expo/vector-icons';
 import Loading from '../components/modals/Loading';
-import {handleLogin} from '../endpoints/Login';
+import { handleLogin } from '../endpoints/Login';
 import React, { useEffect, useState } from 'react'
 
 const Start = ({ navigation }) => {
@@ -19,7 +19,7 @@ const Start = ({ navigation }) => {
         });
 
         const login = async () => {
-            const dataRaw = await getSecureData('credentials');
+            const dataRaw = await getSecureData('user');
             if (!dataRaw) {
                 return;
             }

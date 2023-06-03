@@ -6,7 +6,7 @@ import { deleteSecureData } from '../../helpers/secureStorageHelper'
 import React from 'react';
 
 const appExit = async (navigation) => {
-    await deleteSecureData('credentials');
+    await deleteSecureData('user');
     navigation.navigate('Start');
 };
 
