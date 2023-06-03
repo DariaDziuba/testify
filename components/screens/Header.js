@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { student } from '../../mocks/students';
 import { Octicons } from '@expo/vector-icons';
+import { APP_NAME } from '../Constants';
 import React from 'react';
 
 const Header = (props) => {
@@ -11,7 +12,7 @@ const Header = (props) => {
                     <View className="m-1">
                         <Octicons name="book" size={40} color="#0ea5e9" />
                     </View>
-                    <Text className="text-sky-500 text-3xl font-bold leading-9 tracking-tight">TESTIFY</Text>
+                    <Text className="text-sky-500 text-3xl font-bold leading-9 tracking-tight">{ APP_NAME }</Text>
                 </View>
                 <View className="flex flex-row items-center">
                     <View>

@@ -1,36 +1,13 @@
 import { Text, View, TextInput, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
 import Footer from '../components/screens/Footer';
+import Loading from '../components/modals/Loading';
+import { handleLogin } from '../endpoints/Login';
 import { Ionicons, Fontisto } from '@expo/vector-icons';
-import { HOSTNAME, ENDPOINTS } from '../components/Constants';
-import axios from 'axios';
 import React, { useState } from 'react';
-
-const login = (data) => {
-    if (!data || !Object.keys(data).length) {
-        return;
-    }
-
-    const url = HOSTNAME + ENDPOINTS.checkUserCredentials;
-    console.log(url);
-
-    axios.post(url, JSON.stringify(data))
-    .then((response) => response.json())
-    .then((result) => {
-        if (result && result.isSuccess) {
-            navigation.navigate('Home')
-        } else if (result) {
-            Alert.alert('Error', 'Failed');
-        }
-    })
-    .catch((error) => {
-        // Handle error
-        console.error(error);
-        Alert.alert('Error', 'Failed to create post');
-    });
-};
 
 const Home = ({navigation}) => {
     const [password, showPassword] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [formErrors, setFormErrors] = useState({});
     const [formData, setFormData] = useState({
         login: '',
@@ -46,11 +23,12 @@ const Home = ({navigation}) => {
             return !!formErrors[key];
         });
 
-        if (hasError) {
+        if (hasError || !formData.login || !formData.password) {
+            Alert.alert("Помилка", 'Заповніть всі дані!');
             return;
         }
 
-        await login(formData);
+        await handleLogin(formData, navigation, setLoading)
     }
 
     const handleValidation = (validate) => {
@@ -58,10 +36,17 @@ const Home = ({navigation}) => {
 
         switch(validate) {
             case 'login': errors.login = formData.login ? '' : 'Заповніть поле';
+                if (!errors.login) {
+                    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    errors.login = !errors.login && emailPattern.test(formData.login) ? '' : 'Введіть коректну пошту';
+                }
                 break;
             case 'password': errors.password = formData.password ? '' : 'Заповніть поле';
                 break;
-            default: break;
+            default:
+                errors.login = formData.login ? '' : 'Заповніть поле';
+                errors.password = formData.password ? '' : 'Заповніть поле';
+                break;
         }
 
         setFormErrors(errors);
@@ -69,6 +54,7 @@ const Home = ({navigation}) => {
 
     return (
         <SafeAreaView className="flex-1">
+            <Loading visible={loading}/>
             <View>
                 <Text className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                     Вхід

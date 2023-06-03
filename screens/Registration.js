@@ -1,16 +1,21 @@
 import {
     Text, View, TextInput, TouchableOpacity, SafeAreaView, KeyboardAvoidingView,
-    Platform, TouchableWithoutFeedback, Keyboard, ScrollView
+    Platform, TouchableWithoutFeedback, Keyboard, ScrollView, Alert
 } from 'react-native';
 import Footer from '../components/screens/Footer';
 import Calendar from '../components/modals/Calendar';
+import { handleRegistration } from '../endpoints/Registration'
 import { Ionicons, Fontisto } from '@expo/vector-icons';
+import { formatDate } from '../helpers/dateHelper';
+import Loading from '../components/modals/Loading';
 import React, { useState } from 'react';
 
 const Registration = ({navigation}) => {
     const [password, showPassword] = useState(true);
     const [visible, setVisible] = useState(false);
-    const [birthDate, setBirthDate] = useState(new Date());
+    const [loading, setLoading] = useState(false);
+    const [birthDate, setBirthDate] = useState();
+    const notRequired = ['dateOfBirth'];
 
     const [formErrors, setFormErrors] = useState({});
     const [formData, setFormData] = useState({
@@ -27,30 +32,41 @@ const Registration = ({navigation}) => {
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
-    const showModal = () => {
-        setVisible(true);
-    }
-
     const setBirthDateValue = (value) => {
         handleInputChange('dateOfBirth', value);
-        setBirthDate(value);
+        setBirthDate(value.toLocaleDateString('ua-UA'));
     }
 
     const handleValidation = (validate) => {
         const errors = {...formErrors};
 
         switch(validate) {
-            case 'email': errors.email = formData.email ? '' : 'Заповніть поле';
+            case 'email':
+                errors.email = formData.email ? '' : 'Заповніть поле';
+                if (!errors.email) {
+                    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    errors.email = !errors.email && emailPattern.test(formData.email) ? '' : 'Введіть коректну пошту';
+                }
                 break;
             case 'password': errors.password = formData.password ? '' : 'Заповніть поле';
                 break;
             case 'inviteCode': errors.inviteCode = formData.inviteCode ? '' : 'Заповніть поле';
                 break;
-            case 'lastName': errors.lastName = formData.lastName ? '' : 'Заповніть поле';
+            case 'lastName':
+                errors.lastName = formData.lastName ? '' : 'Заповніть поле';
+                if (!errors.lastName) {
+                    errors.lastName = formData.lastName.includes(' ') ? 'Видаліть пробіли' : '';
+                }
                 break;
             case 'firstName': errors.firstName = formData.firstName ? '' : 'Заповніть поле';
+                if (!errors.firstName) {
+                    errors.firstName = formData.firstName.includes(' ') ? 'Видаліть пробіли' : '';
+                }
                 break;
             case 'fathersName': errors.fathersName = formData.fathersName ? '' : 'Заповніть поле';
+                if (!errors.fathersName) {
+                    errors.fathersName = formData.fathersName.includes(' ') ? 'Видаліть пробіли' : '';
+                }
                 break;
             default: break;
         }
@@ -58,8 +74,24 @@ const Registration = ({navigation}) => {
         setFormErrors(errors);
     };
 
+    const register = async () => {
+        let hasError = Object.keys(formErrors).find((key) => {
+            return !!formErrors[key];
+        }) || Object.keys(formData).find((key) => {
+            return !formData[key] && !notRequired.includes(key);
+        });
+
+        if (hasError) {
+            Alert.alert("Помилка", 'Заповніть всі дані!');
+            return;
+        }
+
+        await handleRegistration(formData, navigation, setLoading);
+    }
+
     return (
         <SafeAreaView className="flex-1">
+            <Loading visible={loading}/>
             <Calendar visible={visible} hideModal={() => setVisible(false)} setValue={setBirthDateValue}/>
 
             <View>
@@ -150,7 +182,7 @@ const Registration = ({navigation}) => {
                                         />
                                     </View>
                                     { formErrors.inviteCode &&
-                                        <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.email}</Text>
+                                        <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.inviteCode}</Text>
                                     }
                                 </View>
 
@@ -173,7 +205,7 @@ const Registration = ({navigation}) => {
                                                 className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
                                             />
                                             { formErrors.lastName &&
-                                                <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.email}</Text>
+                                                <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.lastName}</Text>
                                             }
                                         </View>
                                     </View>
@@ -196,7 +228,7 @@ const Registration = ({navigation}) => {
                                                 className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
                                             />
                                             { formErrors.firstName &&
-                                                <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.email}</Text>
+                                                <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.firstName}</Text>
                                             }
                                         </View>
                                     </View>
@@ -220,7 +252,7 @@ const Registration = ({navigation}) => {
                                             className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
                                         />
                                         { formErrors.fathersName &&
-                                            <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.email}</Text>
+                                            <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.fathersName}</Text>
                                         }
                                     </View>
                                 </View>
@@ -231,7 +263,7 @@ const Registration = ({navigation}) => {
                                 </View>
                                 <View className="mt-1">
                                     <View className="flex z-10 absolute p-2 h-full w-full right-0">
-                                        <TouchableOpacity onPress={() => showModal()} className="h-full w-full justify-center items-end">
+                                        <TouchableOpacity onPress={() => setVisible(true)} className="h-full w-full justify-center items-end">
                                             <Ionicons name={'calendar'} size={25} color="grey"/>
                                         </TouchableOpacity>
                                     </View>
@@ -252,7 +284,7 @@ const Registration = ({navigation}) => {
                                 <TouchableOpacity
                                     type="submit"
                                     className="flex mt-3 w-full rounded-md bg-sky-500 px-3 py-3 text-sm leading-6"
-                                    onPress={() => navigation.navigate('Home')}
+                                    onPress={register}
                                 >
                                     <Text className="text-center text-white font-bold">Далі</Text>
                                 </TouchableOpacity>

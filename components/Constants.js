@@ -1,11 +1,15 @@
+export const APP_NAME = 'QuizWiz';
+
 export const QUESTION_TYPES = {
     single: 'single',
     multiple: 'multiple',
     text: 'text'
 };
 
-export const HOSTNAME = 'https://13.48.132.106:5001/';
+export const HOSTNAME = 'https://eduapp.pp.ua/';
+export const ACCOUNT_TYPE = 'Student';
 
 export const ENDPOINTS = {
-    checkUserCredentials: 'api/User/CheckUserCredentials'
+    checkUserCredentials: 'api/User/CheckUserCredentials',
+    createUser: 'api/User/CreateUser'
 };

@@ -7,7 +7,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 const Calendar = ({visible, hideModal, setValue}) => {
     const [currentValue, setCurrentValue] = useState(new Date());
     const submit = () => {
-        setValue(currentValue.toLocaleDateString('ua-UA'));
+        setValue(currentValue);
         hideModal();
     };
 

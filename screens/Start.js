@@ -1,5 +1,6 @@
 import { View, Text, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 import TestWasClosed from '../components/modals/TestWasClosed';
+import { APP_NAME } from '../components/Constants';
 import { getItem } from '../helpers/asyncStorageHelper';
 import { Octicons } from '@expo/vector-icons';
 import React, { useState, useEffect } from 'react'
@@ -26,7 +27,7 @@ const Start = ({ navigation }) => {
                         <View className="m-1">
                             <Octicons name="book" size={40} color="#0ea5e9" />
                         </View>
-                        <Text className="text-sky-500 text-3xl font-bold leading-9 tracking-tight">TESTIFY</Text>
+                        <Text className="text-sky-500 text-3xl font-bold leading-9 tracking-tight">{ APP_NAME }</Text>
                     </View>
                     <View>
                         <Image
