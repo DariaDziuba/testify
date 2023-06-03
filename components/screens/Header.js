@@ -2,7 +2,13 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { student } from '../../mocks/students';
 import { Octicons } from '@expo/vector-icons';
 import { APP_NAME } from '../Constants';
+import { deleteSecureData } from '../../helpers/secureStorageHelper'
 import React from 'react';
+
+const appExit = async (navigation) => {
+    await deleteSecureData('credentials');
+    navigation.navigate('Start');
+};
 
 const Header = (props) => {
     return (
@@ -21,7 +27,7 @@ const Header = (props) => {
                         </Text>
                         <Text className="text-gray-400 text-xs m-0 font-bold tracking-tight -mt-1">{student.group}</Text>
                     </View>
-                    <TouchableOpacity onPress={() => props.navigation.navigate('Start')}className="pt-1 ml-2 mr-2">
+                    <TouchableOpacity onPress={() => appExit(props.navigation)} className="pt-1 ml-2 mr-2">
                         <Octicons name="sign-out" size={28} color="#0ea5e9" />
                     </TouchableOpacity>
                 </View>

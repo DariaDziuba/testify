@@ -1,21 +1,43 @@
-import { View, Text, SafeAreaView, TouchableOpacity, Image, Alert } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 import { APP_NAME } from '../components/Constants';
 import { getItem } from '../helpers/asyncStorageHelper';
+import { getSecureData } from '../helpers/secureStorageHelper';
 import { showClosedTestError } from '../helpers/alertHelper';
 import { Octicons } from '@expo/vector-icons';
-import React, { useEffect } from 'react'
+import Loading from '../components/modals/Loading';
+import {handleLogin} from '../endpoints/Login';
+import React, { useEffect, useState } from 'react'
 
 const Start = ({ navigation }) => {
-    useEffect(() => {
-        getItem('testInfo', true, (data) => {
+    const [loading, setLoading] = useState(false);
+
+    useEffect( () => {
+        const checkLastTest = async () => await getItem('testInfo', true, (data) => {
             if (data) {
                 showClosedTestError(data.testID);
             };
         });
+
+        const login = async () => {
+            const dataRaw = await getSecureData('credentials');
+            if (!dataRaw) {
+                return;
+            }
+
+            const data = JSON.parse(dataRaw);
+
+            if (data.login && data.password) {
+                await handleLogin(data, navigation, setLoading, true);
+            }
+        }
+
+        login();
+        checkLastTest();
     }, []);
 
     return (
         <SafeAreaView className="flex-1 bg-sky-100">
+            <Loading visible={loading}/>
             <View className="flex-1 items-center justify-center">
                 <View className="flex p-1 items-center">
                     <View className="flex-row p-1 items-center">
