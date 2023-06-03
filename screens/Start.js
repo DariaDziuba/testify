@@ -1,26 +1,21 @@
-import { View, Text, SafeAreaView, TouchableOpacity, Image } from 'react-native';
-import TestWasClosed from '../components/modals/TestWasClosed';
+import { View, Text, SafeAreaView, TouchableOpacity, Image, Alert } from 'react-native';
 import { APP_NAME } from '../components/Constants';
 import { getItem } from '../helpers/asyncStorageHelper';
+import { showClosedTestError } from '../helpers/alertHelper';
 import { Octicons } from '@expo/vector-icons';
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 const Start = ({ navigation }) => {
-    const [visible, setVisible] = useState(false);
-    const [asyncData, setAsyncData] = useState(null)
-
     useEffect(() => {
         getItem('testInfo', true, (data) => {
             if (data) {
-                setAsyncData(data);
-                setVisible(true);
+                showClosedTestError(data.testID);
             };
         });
     }, []);
 
     return (
         <SafeAreaView className="flex-1 bg-sky-100">
-            <TestWasClosed visible={visible} hideModal={() => setVisible(false)} testID={asyncData?.testID}/>
             <View className="flex-1 items-center justify-center">
                 <View className="flex p-1 items-center">
                     <View className="flex-row p-1 items-center">

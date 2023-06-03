@@ -78,7 +78,7 @@ const Home = ({navigation}) => {
                                 autocomplete="login"
                                 placeholder="test@vntu.edu.ua"
                                 onChangeText={(text) => handleInputChange('login', text)}
-                                onEndEditing={() => handleValidation('login')}
+                                onBlur={() => handleValidation('login')}
                                 required
                                 className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
                             />
@@ -107,7 +107,7 @@ const Home = ({navigation}) => {
                                 autocomplete="current-password"
                                 placeholder="Qwerty123"
                                 onChangeText={(text) => handleInputChange('password', text)}
-                                onEndEditing={() => handleValidation('password')}
+                                onBlur={() => handleValidation('password')}
                                 required
                                 className="block w-full p-2 rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900"
                             />

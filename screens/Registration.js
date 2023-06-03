@@ -126,7 +126,7 @@ const Registration = ({navigation}) => {
                                             required
                                             className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
                                             onChangeText={(text) => handleInputChange('email', text)}
-                                            onEndEditing={() => handleValidation('email')}
+                                            onBlur={() => handleValidation('email')}
                                         />
                                         { formErrors.email &&
                                             <Text className="block text-xs leading-6 text-red-500 mr-1"> {formErrors.email}</Text>
@@ -153,7 +153,7 @@ const Registration = ({navigation}) => {
                                             autocomplete="current-password"
                                             placeholder="Qwerty123"
                                             onChangeText={(text) => handleInputChange('password', text)}
-                                            onEndEditing={() => handleValidation('password')}
+                                            onBlur={() => handleValidation('password')}
                                             required
                                             className="block w-full p-2 rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900"
                                         />
@@ -177,7 +177,7 @@ const Registration = ({navigation}) => {
                                             placeholder=""
                                             required
                                             onChangeText={(text) => handleInputChange('inviteCode', text)}
-                                            onEndEditing={() => handleValidation('inviteCode')}
+                                            onBlur={() => handleValidation('inviteCode')}
                                             className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
                                         />
                                     </View>
@@ -200,7 +200,7 @@ const Registration = ({navigation}) => {
                                                 name="lastName"
                                                 placeholder="Іванов"
                                                 onChangeText={(text) => handleInputChange('lastName', text)}
-                                                onEndEditing={() => handleValidation('lastName')}
+                                                onBlur={() => handleValidation('lastName')}
                                                 required
                                                 className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
                                             />
@@ -223,7 +223,7 @@ const Registration = ({navigation}) => {
                                                 name="firstName"
                                                 placeholder="Іван"
                                                 onChangeText={(text) => handleInputChange('firstName', text)}
-                                                onEndEditing={() => handleValidation('firstName')}
+                                                onBlur={() => handleValidation('firstName')}
                                                 required
                                                 className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
                                             />
@@ -247,7 +247,7 @@ const Registration = ({navigation}) => {
                                             name="fathersName"
                                             placeholder="Іванович"
                                             onChangeText={(text) => handleInputChange('fathersName', text)}
-                                            onEndEditing={() => handleValidation('fathersName')}
+                                            onBlur={() => handleValidation('fathersName')}
                                             required
                                             className="block p-2 w-full rounded-md border-2 border-gray-300 focus:border-sky-500 focus:border-opacity-25 py-3 text-gray-900 ring-1 sm:text-sm sm:leading-6"
                                         />

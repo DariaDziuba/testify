@@ -1,15 +1,14 @@
-import { View, Text, SafeAreaView, TouchableOpacity, AppState, ScrollView } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, AppState, Alert } from 'react-native';
 import { Octicons } from '@expo/vector-icons';
 import SimpleHeader from '../components/screens/SimpleHeader';
 import Footer from '../components/screens/Footer';
-import LeaveTest from '../components/modals/LeaveTest';
 import { questions } from '../mocks/questions';
 import { setItem } from '../helpers/asyncStorageHelper';
 import { useRoute } from '@react-navigation/native';
 import Single from '../components/answers/Single';
 import Multiple from '../components/answers/Multiple';
 import TextAnswer from '../components/answers/TextAnswer';
-import TestResult from '../components/modals/TestResult';
+import { showTestResult, showTestBackWarning, showClosedTestError } from '../helpers/alertHelper';
 
 import React, { useState, useEffect } from 'react';
 
@@ -26,26 +25,16 @@ const Test = (props) => {
     const route = useRoute();
     const params = route.params;
     const testID = params && params.testID;
-    const [visible, setVisible] = useState(false);
-    const [showResult, setShowResult] = useState(false);
     const [result, setResult] = useState({});
     const [activeTest, setActiveTest] = useState(0);
     let question = questions[activeTest];
-
-    const leaveTest = (decision) => {
-        if (decision) {
-            props.navigation.goBack();
-        }
-
-        setVisible(false);
-    };
 
     const proceed = (answer) => {
         setResult({...result, [question.id]: answer});
         if (questions.length - 1 > activeTest) {
             setActiveTest(activeTest + 1);
         } else {
-            setShowResult(true);
+            showTestResult(testID, props.navigation);
         }
     };
 
@@ -53,8 +42,8 @@ const Test = (props) => {
         const handleAppStateChange = (newState) => {
             if (newState === 'inactive') {
                 setItem('testInfo', { testID: testID });
-                params.showModal();
                 props.navigation.goBack();
+                showClosedTestError(testID);
             }
         };
         const subscription = AppState.addEventListener('change', handleAppStateChange);
@@ -66,12 +55,10 @@ const Test = (props) => {
 
     return (
         <SafeAreaView className='flex-1'>
-            <LeaveTest visible={visible} leaveTest={ leaveTest }/>
-            <TestResult visible={showResult} hideModal={() => { setShowResult(false); props.navigation.goBack();} }/>
             <SimpleHeader />
             <View className="flex-1 p-2">
                 <View className="flex-row items-center mb-2">
-                    <TouchableOpacity className="m-1" onPress={() => setVisible(true)}>
+                    <TouchableOpacity className="m-1" onPress={() => showTestBackWarning(props.navigation)}>
                         <Octicons name="arrow-left" size={30} color="#0ea5e9" />
                     </TouchableOpacity>
 

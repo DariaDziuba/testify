@@ -1,9 +1,8 @@
 import { SafeAreaView, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import Header from '../components/screens/Header';
-import TestWasClosed from '../components/modals/TestWasClosed';
 import Footer from '../components/screens/Footer';
 import { Octicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import React from 'react';
 
 const getTopics = (topics) => {
     const result = [];
@@ -28,11 +27,9 @@ const getTopics = (topics) => {
 
 const Details = (props) => {
     const { testInfo } = props.route.params;
-    const [ visible, setVisible ] = useState(false);
 
     return (
         <SafeAreaView className="flex flex-1">
-            <TestWasClosed visible={visible} hideModal={() => setVisible(false)} testID={testInfo.ID}/>
             <View>
                 <Header navigation={props.navigation}/>
             </View>
@@ -113,7 +110,7 @@ const Details = (props) => {
                         <TouchableOpacity
                             className="flex  p-2 rounded-md bg-sky-500 px-3 h-10 text-sm leading-6 justify-center"
                             onPress={() => {
-                                props.navigation.navigate('Test', { testID: testInfo.ID, showModal: () => setVisible(true)});
+                                props.navigation.navigate('Test', { testID: testInfo.ID });
                             }}
                         >
                             <Text className="text-center text-white font-bold">Розпочати тест!</Text>
