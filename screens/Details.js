@@ -26,12 +26,12 @@ const getTopics = (topics) => {
 }
 
 const Details = (props) => {
-    const { testInfo } = props.route.params;
+    const { testInfo, user } = props.route.params;
 
     return (
         <SafeAreaView className="flex flex-1">
             <View>
-                <Header navigation={props.navigation}/>
+                <Header navigation={props.navigation} user={user} />
             </View>
             <View className="p-2 flex-1">
                 <View className="flex-row items-center mb-2">

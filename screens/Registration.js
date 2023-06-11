@@ -6,7 +6,6 @@ import Footer from '../components/screens/Footer';
 import Calendar from '../components/modals/Calendar';
 import { handleRegistration } from '../endpoints/Registration'
 import { Ionicons, Fontisto } from '@expo/vector-icons';
-import { formatDate } from '../helpers/dateHelper';
 import Loading from '../components/modals/Loading';
 import React, { useState } from 'react';
 
@@ -15,7 +14,7 @@ const Registration = ({navigation}) => {
     const [visible, setVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const [birthDate, setBirthDate] = useState();
-    const notRequired = ['dateOfBirth'];
+    const notRequired = ['dateOfBirth', 'fathersName'];
 
     const [formErrors, setFormErrors] = useState({});
     const [formData, setFormData] = useState({
@@ -63,7 +62,10 @@ const Registration = ({navigation}) => {
                     errors.firstName = formData.firstName.includes(' ') ? 'Видаліть пробіли' : '';
                 }
                 break;
-            case 'fathersName': errors.fathersName = formData.fathersName ? '' : 'Заповніть поле';
+            case 'fathersName':
+                errors.fathersName = formData.fathersName && formData.fathersName.length < 5
+                    ? 'Введіть коректні дані'
+                    : '';
                 if (!errors.fathersName) {
                     errors.fathersName = formData.fathersName.includes(' ') ? 'Видаліть пробіли' : '';
                 }
@@ -86,7 +88,15 @@ const Registration = ({navigation}) => {
             return;
         }
 
-        await handleRegistration(formData, navigation, setLoading);
+        const data = {};
+
+        Object.keys(formData).forEach((key) => {
+            if (formData[key]) {
+                data[key] = formData[key];
+            }
+        })
+
+        await handleRegistration(data, navigation, setLoading);
     }
 
     return (
@@ -239,7 +249,6 @@ const Registration = ({navigation}) => {
                                         <Text className="block text-sm font-medium leading-6 text-gray-900 mr-1">
                                             По-батькові
                                         </Text>
-                                        <Fontisto name="asterisk" size={7} color="red"/>
                                     </View>
                                     <View className="mt-1">
                                         <TextInput

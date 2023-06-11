@@ -58,7 +58,7 @@ const Card = ({ props }) => {
                 </View>
                 <TouchableOpacity
                     className="flex w-1/3 p-2 rounded-md bg-sky-500 px-3 h-10 text-sm leading-6 justify-center"
-                    onPress={() => props.navigation.navigate('Details', { testInfo: {...card} })}
+                    onPress={() => props.navigation.navigate('Details', { testInfo: {...card}, user: props.user })}
                 >
                     <Text className="text-center text-white font-bold">Детальніше</Text>
                 </TouchableOpacity>

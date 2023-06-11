@@ -4,13 +4,18 @@ import Footer from '../components/screens/Footer';
 import Header from '../components/screens/Header';
 import FilterBar from '../components/modals/FilterBar';
 import { test_card, test_cards } from '../mocks/test';
+import { useRoute } from '@react-navigation/native';
 import { toTestCards } from '../models/testCards';
 import NoTests from '../components/screens/NoTests';
 import React, { useState, useEffect } from 'react';
 
 const Card = React.lazy(() => import('../components/tests/Card'));
 
-const Home = ({navigation}) => {
+const Home = (props) => {
+    const route = useRoute();
+    const params = route.params;
+    const { navigation } = props;
+    const { user } = params;
     const [allCards, setAllCards] = useState([]);
     const [cards, setCards] = useState([]);
     const [filteredCards, setFilteredCards] = useState([]);
@@ -60,16 +65,16 @@ const Home = ({navigation}) => {
         filterCards(filterID, cards);
     }
 
-
     return (
         <SafeAreaView className="flex-1">
             <FilterBar
                 visible={visible}
                 hideModal={() => setVisible(false)}
                 options={{allCards: allCards, setCards: updateCards}}
+                user={user}
             />
 
-            <Header navigation={navigation} />
+            <Header navigation={navigation} user={user}/>
             <View className="bg-gray-200 flex flex-row items-center justify-around h-14">
                 <View className="m-1">
                     <TouchableOpacity
@@ -114,7 +119,7 @@ const Home = ({navigation}) => {
                     <FlatList
                         data={filteredCards}
                         listKey={(item, index) => `_key${index.toString()}`}
-                        renderItem={({item}) => <Card props={{card: item, navigation: navigation}}/>}
+                        renderItem={({item}) => <Card props={{card: item, navigation: navigation, user: user}}/>}
                         ListEmptyComponent={() => (<NoTests />)}
                         numColumns={1}
                         scrollEnabled={true}

@@ -1,5 +1,6 @@
 import { Alert } from 'react-native';
 import { HOSTNAME, ENDPOINTS, ACCOUNT_TYPE } from '../components/Constants';
+import { saveSecureData } from '../helpers/secureStorageHelper'
 
 const saveCustomerData = async (data) => {
     if (!data.login || !data.password) {
@@ -30,9 +31,8 @@ export const handleRegistration = async (data, navigation, setLoading) => {
             case 200:
                 responseData = await response.json();
                 if (responseData.isSuccess) {
-                    const user = responseData?.data?.userInfo || null;
-                    await saveCustomerData(user);
-                    navigation.navigate('Home', { user: user });
+                    await saveCustomerData(data);
+                    navigation.navigate('Home', { user: data });
                 } else {
                     Alert.alert('Помилка', "Щось пішло не так.. Спробуйте ще раз пізніше!");
                 }
@@ -50,6 +50,7 @@ export const handleRegistration = async (data, navigation, setLoading) => {
         }
     } catch (error) {
         setLoading(false);
+        console.log(error);
         Alert.alert('Помилка', "Щось пішло не так... Спробуйте зареєструватись пізніше")
     }
 }

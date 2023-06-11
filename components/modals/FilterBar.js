@@ -1,38 +1,42 @@
-import { View, Text, Modal, TouchableOpacity, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, Modal, TouchableOpacity, FlatList } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import Subject from '../subjects/Subject';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { subjects } from '../../mocks/categories';
+import { getSubjects } from '../../endpoints/Subjects';
 
-const getSubjects = (onPress) => {
-    const result = [];
+const NoSubjects = () => {
+    return (
+        <View>
+            <Text className="text-gray-500 text-base ml-2 tracking-tight">Предметів не визначено</Text>
+        </View>
+    );
+}
 
-    subjects.forEach((subject, index) => {
-        const [checked, setChecked] = useState(false);
-        result.push(
-            <View className="flex-row items-center mt-1" key={"filtered_subjects_" + index}>
-                <TouchableOpacity className="mr-2" onPress={() => { setChecked(!checked); onPress(subject)}}>
-                    <Ionicons name={checked ? 'checkbox' : 'square-outline'} size={35} color="#0ea5e9" />
-                </TouchableOpacity>
-                <Text className="text-gray-500 text-base ml-2 tracking-tight">{subject}</Text>
-            </View>
-        )
-    });
-
-    return result;
-};
-
-const FilterBar = ({visible, hideModal, options}) => {
+const FilterBar = ({visible, hideModal, options, user}) => {
     const all_cards = [...options.allCards];
     const [ selectedFilters, setSelectedFilters ] = useState([]);
+    const [ subjects, setSubjects ] = useState([]);
 
     const processFilterClick = (filterName) => {
+        console.log(selectedFilters)
         const result = selectedFilters.includes(filterName)
             ? selectedFilters.filter((selectedFilter) => selectedFilter != filterName)
             : [...selectedFilters, filterName];
 
         setSelectedFilters(result);
     }
+
+    useEffect(() => {
+        const getCategories = async () => {
+            let data = await getSubjects(user);
+            let result = data.map((subject) => subject.subjectLongName);
+
+            setSubjects(result);
+        };
+
+        getCategories();
+    }, [])
 
     const getFilteredCards = () => {
         if (!selectedFilters.length) {
@@ -66,12 +70,18 @@ const FilterBar = ({visible, hideModal, options}) => {
                                 <Ionicons name="close" size={40} color="#0ea5e9" />
                             </TouchableOpacity>
                         </View>
-                        <ScrollView>
+                        <View>
                             <Text className="text-gray-600 text-xl font-bold leading-9 tracking-tight">Предмети</Text>
-                            <View className="ml-3">
-                                { getSubjects(processFilterClick) }
-                            </View>
-                        </ScrollView>
+                            { subjects.length && <FlatList
+                                data={subjects}
+                                listKey={(item, index) => `_key${index.toString()}`}
+                                renderItem={({item}) => <Subject props={{subject: item, onPress: processFilterClick, selected: selectedFilters.includes(item)}} />}
+                                ListEmptyComponent={() => NoSubjects()}
+                                numColumns={1}
+                                scrollEnabled={true}
+                                className="ml-3"
+                            />}
+                        </View>
                     </SafeAreaView>
                 </SafeAreaProvider>
             </View>
