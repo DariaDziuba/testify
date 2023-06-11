@@ -12,5 +12,6 @@ export const ACCOUNT_TYPE = 'Student';
 export const ENDPOINTS = {
     checkUserCredentials: 'api/User/CheckUserCredentials',
     createUser: 'api/User/CreateUser',
-    getSubjects: 'api/Subject/GetSubjectsByLogin'
+    getSubjects: 'api/Subject/GetSubjectsByLogin',
+    getTasksInfo: 'api/Mobile/GetUserTasksInfo'
 };

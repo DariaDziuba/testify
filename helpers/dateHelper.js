@@ -9,3 +9,13 @@ export const formatDate = (date) => {
 
     return `${day}/${month}/${year}`;
 };
+
+export const toDate = (dateStr) => {
+    if (!dateStr)  {
+        return null;
+    }
+
+    const result = new Date(dateStr);
+
+    return isNaN(result) ? null : result;
+}

@@ -19,7 +19,6 @@ const FilterBar = ({visible, hideModal, options, user}) => {
     const [ subjects, setSubjects ] = useState([]);
 
     const processFilterClick = (filterName) => {
-        console.log(selectedFilters)
         const result = selectedFilters.includes(filterName)
             ? selectedFilters.filter((selectedFilter) => selectedFilter != filterName)
             : [...selectedFilters, filterName];

@@ -85,13 +85,13 @@ const Details = (props) => {
                         <View className="flex-row items-center">
                             <Octicons name='calendar' size={22} color="#0ea5e9" />
                             <Text className="text-gray-500 ml-2 text-lg leading-none tracking-tight">
-                                Доступно до: <Text className="text-gray-900">{testInfo.endDate}</Text>
+                                Доступно до: <Text className="text-gray-900">{testInfo.formattedEndDate}</Text>
                             </Text>
                         </View>
                     }
                     <View className="flex-1">
-                        {testInfo.topics && testInfo.topics.length &&
-                            <View>
+                        {!!testInfo.topics && !!testInfo.topics.length &&
+                            (<View>
                                 <View className="flex-row items-center">
                                     <Octicons name="info" size={22} color="#0ea5e9" />
                                     <Text className="text-gray-900 font-bold ml-2 text-lg leading-none tracking-tight">Теми для проходження:</Text>
@@ -101,7 +101,7 @@ const Details = (props) => {
                                         { getTopics(testInfo.topics) }
                                     </View>
                                 </ScrollView>
-                            </View>
+                            </View>)
                         }
                     </View>
                 </View>

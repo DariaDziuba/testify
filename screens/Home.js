@@ -3,7 +3,7 @@ import { Octicons, Fontisto } from '@expo/vector-icons';
 import Footer from '../components/screens/Footer';
 import Header from '../components/screens/Header';
 import FilterBar from '../components/modals/FilterBar';
-import { test_card, test_cards } from '../mocks/test';
+import { getTasksInfo } from '../endpoints/Task';
 import { useRoute } from '@react-navigation/native';
 import { toTestCards } from '../models/testCards';
 import NoTests from '../components/screens/NoTests';
@@ -27,7 +27,8 @@ const Home = (props) => {
     useEffect(() => {
         setRefreshing(true);
         const fetchData = async () => {
-            const result  = await toTestCards(test_cards);
+            const tasksInfo = await getTasksInfo(user);
+            const result  = await toTestCards(tasksInfo);
 
             setAllCards(result);
             setCards(result);
