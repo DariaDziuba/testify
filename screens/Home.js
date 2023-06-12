@@ -5,7 +5,6 @@ import Header from '../components/screens/Header';
 import FilterBar from '../components/modals/FilterBar';
 import { getTasksInfo } from '../endpoints/Task';
 import { useRoute } from '@react-navigation/native';
-import { toTestCards } from '../models/testCards';
 import NoTests from '../components/screens/NoTests';
 import React, { useState, useEffect } from 'react';
 
@@ -23,27 +22,24 @@ const Home = (props) => {
     const [filterID, setFilterID] = useState('all');
     const [visible, setVisible] = useState(false);
     const filterStyles = "flex flex-row items-center justify-content border-b-2 h-5/6 p-2 ml-1 ";
+    const fetchData = async () => {
+        setRefreshing(true);
+        const result = await getTasksInfo(user);
+
+        setAllCards(result);
+        setCards(result);
+        setFilteredCards(result);
+        setRefreshing(false);
+        setFilterID('all');
+    };
 
     useEffect(() => {
-        setRefreshing(true);
-        const fetchData = async () => {
-            const tasksInfo = await getTasksInfo(user);
-            const result  = await toTestCards(tasksInfo);
-
-            setAllCards(result);
-            setCards(result);
-            setFilteredCards(result);
-            setRefreshing(false);
-        };
-
         fetchData();
     }, []);
 
-    const refresh = () => {
+    const refresh = async () => {
         setRefreshing(true);
-        setTimeout(() => {
-            setRefreshing(false);
-        }, 1000);
+        await fetchData();
     };
 
     const filterCards = (filter, cardsToFilter) => {

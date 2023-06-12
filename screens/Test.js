@@ -30,7 +30,7 @@ const Test = (props) => {
     let question = questions[activeTest];
 
     const proceed = (answer) => {
-        setResult({...result, [question.id]: answer});
+        setResult({...result, [question.questionId]: answer});
         if (questions.length - 1 > activeTest) {
             setActiveTest(activeTest + 1);
         } else {
@@ -72,14 +72,14 @@ const Test = (props) => {
                 </View>
                 <View className="flex-1 p-2">
                     <View className="justify-center items-center mb-2">
-                        <Text className="text-sky-500 text-3xl font-bold leading-9 tracking-tight">Питання №{question.id}</Text>
+                        <Text className="text-sky-500 text-3xl font-bold leading-9 tracking-tight">Питання №{question.questionId}</Text>
                     </View>
 
                     <View>
-                        <Text className="text-gray-900 ml-2 mb-2 text-xl leading-none tracking-tight">{question.title}</Text>
+                        <Text className="text-gray-900 ml-2 mb-2 text-xl leading-none tracking-tight">{question.questionTitle}</Text>
                     </View>
 
-                    {getVariants(question.type, question.answers, proceed)}
+                    {getVariants(question.questionType, question.answers, proceed)}
                 </View>
             </View>
             <Footer />

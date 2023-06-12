@@ -1,6 +1,7 @@
 import { Alert } from 'react-native';
 import { HOSTNAME, ENDPOINTS, ACCOUNT_TYPE } from '../components/Constants';
-import { saveSecureData } from '../helpers/secureStorageHelper'
+import { saveSecureData } from '../helpers/secureStorageHelper';
+import { toUser } from '../models/user'
 
 const saveCustomerData = async (data) => {
     if (!data.login || !data.password) {
@@ -31,8 +32,10 @@ export const handleRegistration = async (data, navigation, setLoading) => {
             case 200:
                 responseData = await response.json();
                 if (responseData.isSuccess) {
-                    await saveCustomerData(data);
-                    navigation.navigate('Home', { user: data });
+                    const userRaw = responseData?.data?.userInfo || null;
+                    const user = toUser(userRaw);
+                    await saveCustomerData(user);
+                    navigation.navigate('Home', { user: user });
                 } else {
                     Alert.alert('Помилка', "Щось пішло не так.. Спробуйте ще раз пізніше!");
                 }

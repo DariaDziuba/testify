@@ -1,6 +1,7 @@
 import { Alert } from 'react-native';
-import { HOSTNAME, ENDPOINTS } from '../components/Constants';
+import { HOSTNAME, ENDPOINTS, IS_MOCKED } from '../components/Constants';
 import { setItem } from '../helpers/asyncStorageHelper';
+import { subjects } from '../mocks/categories';
 
 const saveSubjects = async (data) => {
     if (!data) {
@@ -31,7 +32,7 @@ export const getSubjects = async (data, ) => {
             case 200:
                 responseData = await response.json();
                 if (responseData.isSuccess) {
-                    result = responseData?.data || [];
+                    result = IS_MOCKED ? subjects : responseData?.data || [];
                     await saveSubjects(result);
                 } else {
                     Alert.alert('Помилка', "Щось пішло не так.. Спробуйте ще раз пізніше!");

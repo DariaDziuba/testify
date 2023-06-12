@@ -8,6 +8,7 @@ export const QUESTION_TYPES = {
 
 export const HOSTNAME = 'https://eduapp.pp.ua/';
 export const ACCOUNT_TYPE = 'Student';
+export const IS_MOCKED = true;
 
 export const ENDPOINTS = {
     checkUserCredentials: 'api/User/CheckUserCredentials',

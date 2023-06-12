@@ -52,7 +52,7 @@ const Card = ({ props }) => {
                         card.scheduled &&
                             <Text className="text-gray-400">
                                 Доступно до:
-                                <Text className="font-bold"> {card.endDate}</Text>
+                                <Text className="font-bold"> {card.formattedEndDate}</Text>
                             </Text>
                     }
                 </View>

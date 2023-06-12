@@ -1,64 +1,60 @@
 export const questions = [
     {
-        "id": 1,
-        "type": "single",
-        "title": "Geography quizh",
+        "questionId": 1,
+        "questionType": "single",
+        "questionTitle": "Яка група найкраща?",
         "answers": [
             {
                 "fid": 1,
-                "text": "Europe"
+                "text": "1КІ-21мс"
             },
             {
                 "fid": 2,
-                "text": "Asia"
+                "text": "1КІ-21б"
             },
             {
                 "fid": 3,
-                "text": "Africa"
-            },
-            {
-                "fid": 4,
-                "text": "Australia"
+                "text": "1КІ-21мсз"
             }
         ],
-        "rightAnswer": 4
+        "rightAnswer": 1
     },
     {
-        "id": 2,
-        "type": "multiple",
-        "title": "Fruits quizhgf",
+        "questionId": 2,
+        "questionType": "multiple",
+        "questionTitle": "Які предмети були в групі КІ-21мс?",
         "answers": [
             {
                 "fid": 1,
-                "text": "Apple"
+                "text": "ПтРО"
             },
             {
                 "fid": 2,
-                "text": "Banana"
+                "text": "КСМ"
             },
             {
                 "fid": 3,
-                "text": "Watermelon"
+                "text": "КМ"
             },
             {
                 "fid": 4,
-                "text": "Orange"
+                "text": "ОБД"
             },
             {
                 "fid": 5,
-                "text": "Pear"
+                "text": "ЕП"
             }
         ],
         "rightAnswer": [
             1,
-            5
+            3
         ]
     },
     {
-        "id": 3,
-        "type": "text",
-        "title": "Question about space",
+        "questionId": 3,
+        "questionType": "text",
+        "questionTitle": "Напишіть вищий заклад в якому навчались (абревіатура)",
         "answers": null,
-        "rightAnswer": "Sun"
+        "rightAnswer": "ВНТУ"
     }
 ];

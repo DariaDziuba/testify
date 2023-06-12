@@ -1,14 +1,8 @@
 import { Alert } from 'react-native';
-import { HOSTNAME, ENDPOINTS } from '../components/Constants';
-import { setItem } from '../helpers/asyncStorageHelper';
-
-const saveTasks = async (data) => {
-    if (!data) {
-        return;
-    }
-
-    await setItem('tasks', data);
-}
+import { HOSTNAME, ENDPOINTS, IS_MOCKED } from '../components/Constants';
+import { getItem } from '../helpers/asyncStorageHelper';
+import { toTestCards } from '../models/testCards';
+import { tasks_info } from '../mocks/tasks';
 
 export const getTasksInfo = async (data) => {
     let url = HOSTNAME + ENDPOINTS.getTasksInfo;
@@ -31,8 +25,8 @@ export const getTasksInfo = async (data) => {
             case 200:
                 responseData = await response.json();
                 if (responseData.isSuccess) {
-                    result = responseData?.data || [];
-                    await saveTasks(result);
+                    const rawTasksInfo = IS_MOCKED ? tasks_info : responseData?.data || [];
+                    result = toTestCards(rawTasksInfo);
                 } else {
                     Alert.alert('Помилка', "Щось пішло не так.. Спробуйте ще раз пізніше!");
                 }
@@ -46,7 +40,9 @@ export const getTasksInfo = async (data) => {
                 break;
         }
     } catch (error) {
-        Alert.alert('Помилка', "Щось пішло не так...")
+        const savedTasks = await getItem('savedTasks', true);
+        result = Object.keys(savedTasks).map((key) => savedTasks[key]);
+        Alert.alert('Попередження', "Зв'язок з інтернетом відсутній. Було завантажено збережені тести")
     }
 
     return result;

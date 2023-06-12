@@ -25,7 +25,7 @@ const Header = (props) => {
                         <Text className="text-gray-800 text-base mr-2 font-bold tracking-tight">
                             {user.firstName} {user.lastName}
                         </Text>
-                        <Text className="text-gray-400 text-xs m-0 font-bold tracking-tight -mt-1">{user.inviteCode}</Text>
+                        <Text className="text-gray-400 text-xs m-0 font-bold tracking-tight -mt-1">{user.groupName}</Text>
                     </View>
                     <TouchableOpacity onPress={() => appExit(props.navigation)} className="pt-1 ml-2 mr-2">
                         <Octicons name="sign-out" size={28} color="#0ea5e9" />

@@ -105,7 +105,7 @@ const Details = (props) => {
                         }
                     </View>
                 </View>
-                {!testInfo.evaluated &&
+                {!testInfo.availableToPass &&
                     <View>
                         <TouchableOpacity
                             className="flex  p-2 rounded-md bg-sky-500 px-3 h-10 text-sm leading-6 justify-center"
